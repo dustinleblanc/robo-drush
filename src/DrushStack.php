@@ -319,13 +319,13 @@ class DrushStack extends CommandStack
      * @param string $command
      * @return $this
      */
-    public function exec($command)
+    public function exec($command, $prompt = false)
     {
         if (is_array($command)) {
             $command = implode(' ', array_filter($command));
         }
 
-        return parent::exec($this->injectArguments($command));
+        return parent::exec($this->injectArguments($command, $prompt));
     }
 
     /**
@@ -334,9 +334,9 @@ class DrushStack extends CommandStack
      * @param string $command
      * @return string the modified command string
      */
-    protected function injectArguments($command)
+    protected function injectArguments($command, $prompt)
     {
-        return $this->siteAlias . ' ' . $command . ' -y' . $this->arguments;
+        return $this->siteAlias . ' ' . $command . ($prompt ? '' : ' -y ') . $this->arguments;
     }
 
 }
